@@ -20,3 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Registror routes
+Route::prefix('registror')->group(function(){
+  Route::get('/', 'Users\Registror\RegistrorController@index')->name('registror.dashboard');
+  Route::get('login', 'Auth\RegistrorLogin@showLoginForm')->name('registror.login');
+  Route::post('login', 'Auth\RegistrorLogin@login')->name('registror.login.submit');
+});

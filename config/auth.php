@@ -34,11 +34,27 @@ return [
     | Supported: "session", "token"
     |
     */
-
+    #new admin,lecturer,registror and headofdepart guards were added to default one below
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'admin'=>[
+          'driver'=>'session',
+          'provider'=>'admins',
+        ],
+        'head'=>[
+          'driver'=>'session',
+          'provider'=>'heads',
+        ],
+        'lecturer'=>[
+          'driver'=>'session',
+          'provider'=>'lecturers',
+        ],
+        'registror'=>[
+          'driver'=>'session',
+          'provider'=>'registrors',
         ],
 
         'api' => [
@@ -70,6 +86,22 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'admins'=>[
+          'driver'=>'eloquent',
+          'model'=>App\Admin::class,
+        ],
+        'lecturers'=>[
+          'driver'=>'eloquent',
+          'model'=>App\Lecturer::class,
+        ],
+        'heads'=>[
+          'driver'=>'eloquent',
+          'model'=>App\HeadProgram::class,
+        ],
+        'registrors'=>[
+          'driver'=>'eloquent',
+          'model'=>App\Registror::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -91,13 +123,33 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
-
+    #add passwords reset for our models created
     'passwords' => [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'admins'=>[
+            'provider'=>'admins',
+            'table'=>'password_resets',
+            'expire'=>60,
+        ],
+        'heads'=>[
+            'provider'=>'heads',
+            'table'=>'password_resets',
+            'expire'=>60,
+        ],
+        'lecturers'=>[
+            'provider'=>'lecturers',
+            'table'=>'password_resets',
+            'expire'=>60,
+        ],
+        'registrors'=>[
+            'provider'=>'registrors',
+            'table'=>'password_resets',
+            'expire'=>60,
         ],
     ],
 

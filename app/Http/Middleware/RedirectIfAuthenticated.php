@@ -18,10 +18,21 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($guard == "registror" && Auth::guard($guard)->check()) {
+          return redirect()->route('registror.dashboard');
+        }
+        if ($guard == "admin" && Auth::guard($guard)->check()) {
+          return redirect()->route('admin.dashboard');
+        }
+        if ($guard == "lecturer" && Auth::guard($guard)->check()) {
+          return redirect()->route('lecturer.dashboard');
+        }
+        if ($guard == "head" && Auth::guard($guard)->check()) {
+          return redirect()->route('program.dashboard');
+        }
         if (Auth::guard($guard)->check()) {
             return redirect(RouteServiceProvider::HOME);
         }
-
         return $next($request);
     }
 }
