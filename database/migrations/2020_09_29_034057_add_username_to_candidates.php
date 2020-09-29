@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUsernameToApplicationsTable extends Migration
+class AddUsernameToCandidates extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddUsernameToApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('applications', function (Blueprint $table) {
-            $table->string('username')->unique();
-            $table->string('password');
+        Schema::table('candidates', function (Blueprint $table) {
+          $table->string('username')->unique();
+          $table->string('password');
         });
     }
 
@@ -26,7 +26,7 @@ class AddUsernameToApplicationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('applications', function (Blueprint $table) {
+        Schema::table('candidates', function (Blueprint $table) {
             //
         });
     }

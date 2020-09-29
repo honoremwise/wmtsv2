@@ -15,7 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->integer('reference_no')->references('application_referrence_no')->on('candidates');
+            $table->integer('reference_no')->references('application_refence_no')->on('candidates');
             $table->string('status');
             $table->integer('number_of_application');
             $table->date('latest_application_year');

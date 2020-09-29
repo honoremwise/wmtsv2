@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Candidate;
+use App\Program;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 class CandidateController extends Controller
 {
     /**
@@ -14,17 +15,8 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+      $pro = array('programs' => Program::all());
+      return view('application/account',$pro);
     }
 
     /**
@@ -35,7 +27,32 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //create new candidate account
+      $request->validate([
+          'firstname' => ['required', 'string', 'max:255'],'lastname' => ['required', 'string', 'max:255'],
+          'program' => ['required', 'integer','min:1'],
+          'passportid' => ['required', 'string','min:16','unique:candidates,nid_passport_number'],
+          'phone' => ['required', 'string','min:10','unique:candidates'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:candidates'],
+          'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ],[
+        'program.integer'=>'Invalid selection',
+        'passportid.min'=>'This should be atleast 16 characters',
+      ]);
+      //make a reference number(skipped by now)
+      $data=$request->all();
+      Candidate::create([
+          'first_name' => $data['firstname'],
+          'last_name' => $data['lastname'],
+          'program'=>$data['program'],
+          'phone'=>$data['phone'],
+          'application_refence_no'=>"23",
+          'username'=>$data['email'],
+          'email' => $data['email'],
+          'nid_passport_number'=>$data['passportid'],
+          'password' => Hash::make($data['password']),
+      ]);
+      return view('welcome');
     }
 
     /**
