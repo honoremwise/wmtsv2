@@ -4,8 +4,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-
-class Registror extends Model
+class Registror extends Authenticatable
 {
     //Registror logins and account activities management
     use Notifiable;

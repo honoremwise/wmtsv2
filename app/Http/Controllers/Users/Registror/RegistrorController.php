@@ -13,6 +13,6 @@ class RegistrorController extends Controller
     }
     public function index()
     {
-      // code...
+      return view('registror.dashboard');
     }
 }

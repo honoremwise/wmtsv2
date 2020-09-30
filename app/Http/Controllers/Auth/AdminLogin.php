@@ -1,20 +1,20 @@
 <?php
-#RegistrorLogin
-namespace App\Http\Controllers\Auth;
 
+namespace App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-class RegistrorLogin extends Controller
+
+class AdminLogin extends Controller
 {
     public function __construct()
     {
-      $this->middleware('guest:registror')->except('logout');
+      $this->middleware('guest:admin')->except('logout');
     }
     public function showLoginForm()
     {
       #display registror login form
-      return view('auth.registrorlogin');
+      return view('auth.adminlogin');
     }
     public function login(Request $request)
     {
@@ -26,8 +26,8 @@ class RegistrorLogin extends Controller
         'password.min'=>'Password is to short',
       ]);
       $where = array('email' =>$request->email,'password'=>$request->password);
-      if (Auth::guard('registror')->attempt($where)){
-        return redirect()->intended(route('registror.dashboard'));
+      if (Auth::guard('admin')->attempt($where)){
+        return redirect()->intended(route('admin.dashboard'));
       }
       $errors = array('password' =>'Email or password is invalid');
       return redirect()->back()->withErrors($errors)->withInput($request->only('email'));

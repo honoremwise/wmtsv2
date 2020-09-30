@@ -20,6 +20,12 @@
           <div class="container">
               <div class="row justify-content-center">
                   <div class="col-md-6">
+                    <?php if ($alert=Session::get('alert-success')): ?>
+                      <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{$alert}}
+                      </div>
+                    <?php endif; ?>
                       <div class="card">
                           <div class="card-body">
                               <form method="POST" action="{{ route('create.account') }}">
@@ -132,7 +138,7 @@
                                           <button type="submit" class="btn btn-primary">
                                               {{ __('Register') }}
                                           </button>
-                                          <a class="btn btn-link" href="#">
+                                          <a class="btn btn-link" href="{{ route('login')}}">
                                               {{ __('Login?') }}
                                           </a>
                                       </div>

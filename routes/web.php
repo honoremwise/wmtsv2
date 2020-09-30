@@ -16,15 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+//student/candidate authentication
 Auth::routes();
-
+Route::get('login', 'CandidateController@signin')->name('login');
+Route::post('login', 'Auth\StudentLogin@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('register', 'CandidateController@signin')->name('register');
 Route::get('/home', 'HomeController@index')->name('home');
-// Registror routes
-Route::get('/test',function()
-{
-  return view('application/account');
+//Admin routes
+// Admin routes
+Route::prefix('admin')->group(function(){
+    Route::get('/', 'Users\Admin\AdminController@index')->name('admin.dashboard');
+    Route::get('/login', 'Auth\AdminLogin@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLogin@login')->name('admin.login.submit');
 });
+// Registror routes
 Route::prefix('registror')->group(function(){
   Route::get('/', 'Users\Registror\RegistrorController@index')->name('registror.dashboard');
   Route::get('login', 'Auth\RegistrorLogin@showLoginForm')->name('registror.login');

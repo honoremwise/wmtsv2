@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Candidate;
 use App\Program;
+use App\PHPMailer\PHPMailerLib;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class CandidateController extends Controller
@@ -18,7 +18,10 @@ class CandidateController extends Controller
       $pro = array('programs' => Program::all());
       return view('application/account',$pro);
     }
-
+    public function signin()
+    {
+      return view('welcome');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -39,22 +42,73 @@ class CandidateController extends Controller
         'program.integer'=>'Invalid selection',
         'passportid.min'=>'This should be atleast 16 characters',
       ]);
-      //make a reference number(skipped by now)
       $data=$request->all();
+      $referenceNumber=$this->referenceNumber($data['program']);
       Candidate::create([
           'first_name' => $data['firstname'],
           'last_name' => $data['lastname'],
           'program'=>$data['program'],
           'phone'=>$data['phone'],
-          'application_refence_no'=>"23",
-          'username'=>$data['email'],
+          'application_referrence_no'=>$referenceNumber,
+          'username'=>$referenceNumber,
           'email' => $data['email'],
           'nid_passport_number'=>$data['passportid'],
           'password' => Hash::make($data['password']),
       ]);
-      return view('welcome');
+      $this->sendAccount($data['email'],$referenceNumber,$data['password']);
+      return redirect()->back()->with('alert-success','Go to your email for logging in to our system');
     }
-
+    protected function referenceNumber($program)
+    {
+      // format reference number here
+      //$reference=program.yearapplied.numberofapplicantsintheprogramincremented.
+      $where = array('program' =>$program);
+      $applicants=count(Candidate::where($where)->get())+1;
+      $reference=$program.date('Y').$applicants;
+      return $reference;
+    }
+    protected function sendAccount($to,$ref_no,$pass)
+    {
+      // send username and password registered on candidates email
+      # get PHPMailer instance library
+      $mailer=new PHPMailerLib();
+      $mail=$mailer->load();
+      // SMTP configuration
+      $mail->isSMTP();
+      $mail->Host     = 'mail.supremecluster.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'admin@sihs.education';
+      $mail->Password = 'iyaremyef@gmail.com1';
+      $mail->SMTPSecure = 'ssl';
+      $mail->Port     = 465;
+      $mail->setFrom('admin@sihs.education', 'Student Application');
+      //$mail->addReplyTo('nteclovis2019@gmail.com', 'Faustin');
+      // Add a recipient
+      $mail->addAddress($to);
+      $mail->Subject = 'Account verification';
+      // Set email format to HTML
+      $mail->isHTML(true);
+      // Email body content
+      $link = url(config('app.url'));
+      $mailContent=
+      "<h3>Account Login Details</h3>
+      <p>Dear Applicant, The following are your username and password you chose on our system.</p>
+      </br>
+      <b>Username:</b>$ref_no
+      <b>Password:</b>$pass
+      <p>$link<p>
+      <p>Thank you,</p>
+      <p>Administrator<p>";
+      $mail->Body = $mailContent;
+      // Send email
+      if (!$mail->send()){
+        //echo 'Message could not be sent.';
+        #echo 'Mailer Error: ' . $mail->ErrorInfo;
+        return false;
+      } else{
+        return true;
+      }
+    }
     /**
      * Display the specified resource.
      *
@@ -65,7 +119,6 @@ class CandidateController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *

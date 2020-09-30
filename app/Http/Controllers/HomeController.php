@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Foundation\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:student');
     }
 
     /**
@@ -21,8 +21,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        #return view('home');
+        #get the current user status
+        #$appstatus=$this->getStatus($request->user()->id);
+        $appstatus=$this->getStatus($request->user()->);
+        
+    }
+    protected function getStatus()
+    {
+      // code...
     }
 }

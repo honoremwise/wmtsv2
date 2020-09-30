@@ -1,7 +1,7 @@
 @extends('layouts.logins')
 @section('form')
 <div class="panel-body">
-  <form role="application" action="{{ route('registror.login.submit') }}" method="post">
+  <form role="application" action="{{ route('admin.login.submit') }}" method="post">
     @csrf
     <fieldset>
       <div class="form-group">
@@ -20,7 +20,7 @@
               </span>
           @enderror
       </div>
-      <input type="submit" name="registerlogin" class="btn btn-lg btn-primary btn-block" value="Login">
+      <input type="submit" name="adminlogin" class="btn btn-lg btn-primary btn-block" value="Login">
       <center><a href=""><span style="font-size: 13px;font-weight: 700;">Password Help</span></a></center><hr>
     </fieldset>
   </form>

@@ -15,7 +15,7 @@ class CreateCandidatesTable extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('application_referrence_no')->unique(); 
+            $table->bigInteger('application_referrence_no')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('dob');
