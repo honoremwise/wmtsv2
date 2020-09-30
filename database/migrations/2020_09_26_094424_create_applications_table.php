@@ -15,10 +15,10 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('reference_no')->references('application_referrence_no')->on('candidates');
-            $table->string('status');
-            $table->integer('number_of_application');
-            $table->date('latest_application_year');
+            $table->bigInteger('reference_no')->unique();
+            $table->string('status')->nullable();
+            $table->integer('number_of_application')->nullable();
+            $table->date('latest_application_year')->nullable();
             $table->timestamps();
         });
     }

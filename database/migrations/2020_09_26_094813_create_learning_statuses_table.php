@@ -15,9 +15,9 @@ class CreateLearningStatusesTable extends Migration
     {
         Schema::create('learning_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('regno')->references('regno')->on('students');
-            $table->string('status');
-            $table->string('status_description');
+            $table->integer('regno');
+            $table->string('status')->nullable();
+            $table->string('status_description')->nullable();
             $table->timestamps();
         });
     }

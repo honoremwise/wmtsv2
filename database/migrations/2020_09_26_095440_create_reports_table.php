@@ -15,7 +15,7 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->integer('regno')->references('regno')->on('students');
+            $table->integer('regno');
             $table->timestamps();
         });
     }

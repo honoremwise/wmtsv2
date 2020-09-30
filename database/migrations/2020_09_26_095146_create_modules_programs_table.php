@@ -15,9 +15,9 @@ class CreateModulesProgramsTable extends Migration
     {
         Schema::create('modules_programs', function (Blueprint $table) {
             $table->id();
-            $table->integer('module_id')->references('id')->on('modules');
-            $table->integer('level');
-            $table->string('learning_status');
+            $table->integer('module_id');
+            $table->integer('level')->nullable();
+            $table->string('learning_status')->nullable();
             $table->integer('lecturer_id')->references('id')->on('users');
             $table->timestamps();
         });

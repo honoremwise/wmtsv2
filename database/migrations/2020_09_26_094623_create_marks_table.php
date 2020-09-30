@@ -15,8 +15,8 @@ class CreateMarksTable extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->integer('regno')->references('regno')->on('students');
-            $table->float('marks');
+            $table->integer('regno');
+            $table->float('marks')->nullable();
             $table->integer('user_id')->references('id')->on('users');
             $table->integer('grade_id')->references('id')->on('grades');
             $table->timestamps();

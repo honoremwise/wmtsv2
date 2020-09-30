@@ -15,9 +15,9 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer('regno');
-            $table->integer('reference_no')->references('reference_no')->on('applications');
-            $table->integer('level_of_study');
+            $table->integer('regno')->nullable();
+            $table->integer('reference_no');
+            $table->integer('level_of_study')->nullable();
             $table->timestamps();
         });
     }
