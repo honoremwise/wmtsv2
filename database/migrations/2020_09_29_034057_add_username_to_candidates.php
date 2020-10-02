@@ -15,7 +15,7 @@ class AddUsernameToCandidates extends Migration
     {
         Schema::table('candidates', function (Blueprint $table) {
           $table->string('username')->unique();
-          $table->string('password')->nullable();
+          $table->string('password');
         });
     }
 
