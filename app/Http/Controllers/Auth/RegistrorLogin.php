@@ -25,7 +25,7 @@ class RegistrorLogin extends Controller
       ],[
         'password.min'=>'Password is to short',
       ]);
-      $where = array('email' =>$request->email,'password'=>$request->password);
+      $where = array('email' =>$request->email,'password'=>$request->password,'role_id'=>'2');
       if (Auth::guard('registror')->attempt($where)){
         return redirect()->intended(route('registror.dashboard'));
       }

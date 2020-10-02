@@ -41,4 +41,6 @@ Route::prefix('application')->group(function(){
   Route::get('/','CandidateController@index')->name('student.application');
   Route::get('/signin','HomeController@index')->name('signin');
   Route::post('register', 'CandidateController@store')->name('create.account');
+  Route::post('basicdata', 'ApplicationsController@addBasicData')->name('application.basicdata');
+  Route::post('livingplace', 'ApplicationsController@addLivingPlace')->name('application.livingplace');
 });

@@ -15,8 +15,15 @@ class Candidate extends Authenticatable
    protected $table="candidates";
    protected $guard = 'student';
    protected $fillable = [
-      'first_name','last_name','phone','nid_passport_number',
-      'program', 'email', 'password','username','	application_referrence_no',
+      'first_name',
+      'last_name',
+      'phone','dob','birthplace','country',
+      'nid_passport_number','fax','city_province',
+      'program','district','sector','cell','village','street',
+      'email',
+      'password',
+      'username',
+      'application_referrence_no',
     ];
     protected $hidden = [
     'password',

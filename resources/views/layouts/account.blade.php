@@ -23,7 +23,15 @@
 
     <!-- Custom Fonts -->
     <link href="{{asset('template/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <style media="screen">
+    .invalid-feedback {
 
+      width: 100%;
+      margin-top: 0.25rem;
+      font-size: 95%;
+      color: #e3342f;
+    }
+    </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

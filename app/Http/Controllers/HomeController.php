@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Foundation\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Applications;
 class HomeController extends Controller
 {
     /**
@@ -15,7 +15,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth:student');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -26,11 +25,21 @@ class HomeController extends Controller
         #return view('home');
         #get the current user status
         #$appstatus=$this->getStatus($request->user()->id);
-        $appstatus=$this->getStatus($request->user()->);
-        
-    }
-    protected function getStatus()
-    {
-      // code...
+        $where = array('reference_no' =>$request->user()->application_referrence_no);
+        $applications=Applications::where($where)->first();
+        if (empty($applications)){
+          #return view('home');
+          //get user program
+          $program=$request->user()->program;
+          if ($program==1) {
+            return view('application.bachelor');
+          }
+          if ($program==2) {
+            return view('application.master');
+          }
+        }
+        #get application status(approved, rejected or pending)
+        $status=$applications->status;
+        #echo "go student";
     }
 }
