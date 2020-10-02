@@ -15,10 +15,10 @@ class CreateModulesTable extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('module_code');
-            $table->string('module_name');
-            $table->string('module_credits');
-            $table->integer('learning_hours');
+            $table->string('module_code')->nullable();
+            $table->string('module_name')->nullable();
+            $table->string('module_credits')->nullable();
+            $table->integer('learning_hours')->nullable();
             $table->timestamps();
         });
     }
