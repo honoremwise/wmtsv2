@@ -1,7 +1,7 @@
 @extends('layouts.logins')
 @section('form')
 <div class="panel-body">
-  <form role="loggin" action="{{ route('admin.login.submit') }}" method="post">
+  <form role="loggin" action="{{ route('authentication.check') }}" method="post">
     @csrf
     <fieldset>
       <div class="form-group">

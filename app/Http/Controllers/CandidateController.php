@@ -78,7 +78,7 @@ class CandidateController extends Controller
       $mail->Host     = 'mail.supremecluster.com';
       $mail->SMTPAuth = true;
       $mail->Username = 'admin@sihs.education';
-      $mail->Password = 'iyaremyef@gmail.com1';
+      $mail->Password = 'iyaremyef@gmail.com12';
       $mail->SMTPSecure = 'ssl';
       $mail->Port     = 465;
       $mail->setFrom('admin@sihs.education', 'Student Application');

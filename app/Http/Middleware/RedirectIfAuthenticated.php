@@ -33,6 +33,9 @@ class RedirectIfAuthenticated
         if ($guard == "student" && Auth::guard($guard)->check()) {
           return redirect()->route('home');
         }
+        if ($guard == "admission" && Auth::guard($guard)->check()) {
+          return redirect()->route('admissions.dashboard');
+        }
         if (Auth::guard($guard)->check()) {
             return redirect(RouteServiceProvider::HOME);
         }

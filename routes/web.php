@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function(){
     Route::get('/', 'Users\Admin\AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLogin@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLogin@login')->name('admin.login.submit');
+    Route::post('/addrole', 'Users\Admin\AdminController@addRole')->name('admin.role');
 });
 // Registror routes
 Route::prefix('registror')->group(function(){
@@ -43,4 +44,17 @@ Route::prefix('application')->group(function(){
   Route::post('register', 'CandidateController@store')->name('create.account');
   Route::post('basicdata', 'ApplicationsController@addBasicData')->name('application.basicdata');
   Route::post('livingplace', 'ApplicationsController@addLivingPlace')->name('application.livingplace');
+  Route::post('languages', 'ApplicationsController@addLanguages')->name('application.addlanguage');
+  Route::post('education', 'ApplicationsController@addEducation')->name('application.addeducation');
+  Route::post('religious', 'ApplicationsController@addReligous')->name('application.religious');
+  Route::post('essay', 'ApplicationsController@addEssay')->name('application.essay');
+  Route::post('biograph', 'ApplicationsController@addBiograph')->name('application.autobiograph');
+  Route::post('logout','ApplicationsController@logout')->name('application.logout');
+});
+//Admissions officer routes
+Route::prefix('admissions')->group(function()
+{
+  Route::get('/','Users\Admissions\AdmissionController@index')->name('admissionofficer');
+  Route::get('login','Auth\AdmissionLogin@showLoginForm')->name('admission.login');
+  Route::post('login','Auth\AdmissionLogin@login')->name('authentication.check');
 });

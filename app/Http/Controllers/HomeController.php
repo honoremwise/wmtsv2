@@ -34,7 +34,7 @@ class HomeController extends Controller
           if ($program==1) {
             return view('application.bachelor');
           }
-          if ($program==2) {
+          if ($program==2){
             return view('application.master');
           }
         }

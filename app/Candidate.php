@@ -23,7 +23,9 @@ class Candidate extends Authenticatable
       'email',
       'password',
       'username',
-      'application_referrence_no',
+      'application_referrence_no','english_proficiency','native_languages','other_language1','other_language2',
+      'high_school','denomination_name','denomination','ordained_status','ordained_church',
+      'treatment_status','treatment_description','application_motivation','bibliography',
     ];
     protected $hidden = [
     'password',

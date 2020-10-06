@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-class AdminLogin extends Controller
+
+class AdmissionLogin extends Controller
 {
     public function __construct()
     {
-      $this->middleware('guest:admin')->except('logout');
+      $this->middleware('guest:admission')->except('logout');
     }
     public function showLoginForm()
     {
-      #display registror login form
-      return view('auth.adminlogin');
+      return view('auth.admissionofficer');
     }
+
     public function login(Request $request)
     {
       // handle form login data submitted here
@@ -26,8 +26,8 @@ class AdminLogin extends Controller
         'password.min'=>'Password is to short',
       ]);
       $where = array('email' =>$request->email,'password'=>$request->password,'role_id'=>'1');
-      if (Auth::guard('admin')->attempt($where)){
-        return redirect()->intended(route('admin.dashboard'));
+      if (Auth::guard('admission')->attempt($where)){
+        return redirect()->intended(route('admissionofficer'));
       }
       $errors = array('password' =>'Invalid credentials');
       return redirect()->back()->withErrors($errors)->withInput($request->only('email'));
