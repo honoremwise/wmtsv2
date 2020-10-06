@@ -34,6 +34,10 @@ Route::prefix('admin')->group(function(){
 // Registror routes
 Route::prefix('registror')->group(function(){
   Route::get('/', 'Users\Registror\RegistrorController@index')->name('registror.dashboard');
+  Route::get('applicants', 'Users\Registror\RegistrorController@applicants')->name('applicants');
+  Route::get('students', 'Users\Registror\RegistrorController@students')->name('students');
+  Route::get('marks', 'Users\Registror\RegistrorController@marks')->name('marks');
+  Route::get('status', 'Users\Registror\RegistrorController@learning_status')->name('staus');
   Route::get('login', 'Auth\RegistrorLogin@showLoginForm')->name('registror.login');
   Route::post('login', 'Auth\RegistrorLogin@login')->name('registror.login.submit');
 });
@@ -58,3 +62,6 @@ Route::prefix('admissions')->group(function()
   Route::get('login','Auth\AdmissionLogin@showLoginForm')->name('admission.login');
   Route::post('login','Auth\AdmissionLogin@login')->name('authentication.check');
 });
+
+
+
