@@ -9,7 +9,7 @@ class RegistrorLogin extends Controller
 {
     public function __construct()
     {
-      $this->middleware('guest:registror')->except('logout');
+      //$this->middleware('guest:registror')->except('logout');
     }
     public function showLoginForm()
     {
