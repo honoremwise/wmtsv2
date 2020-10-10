@@ -37,11 +37,8 @@ class CreateCandidatesTable extends Migration
             $table->string('native_languages')->nullable();
             $table->string('high_school')->nullable();
             $table->string('college1')->nullable();
-            $table->string('college2')->nullable();
             $table->string('university1')->nullable();
-            $table->string('university2')->nullable();
             $table->string('seminary1')->nullable();
-            $table->string('seminary2')->nullable();
             $table->string('program')->nullable();
             $table->string('denomination')->nullable();
             $table->string('denomination_name')->nullable();

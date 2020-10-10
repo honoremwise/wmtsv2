@@ -110,10 +110,10 @@
     <script src="{{asset('template/dist/js/sb-admin-2.js')}}"></script>
 
       <!-- DataTables JavaScript -->
-      <script src="{{asset('template/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('template/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('template/vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('template/vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
-
+    <script src="{{asset('template/dist/js/main.js')}}"></script>
     <!-- Custom Theme JavaScript -->
     <script src="{{asset('template/dist/js/sb-admin-2.js')}}"></script>
     <script>
@@ -122,7 +122,7 @@
             responsive: true
         });
     });
-    </script>          
+    </script>
 </body>
 
 </html>

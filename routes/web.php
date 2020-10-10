@@ -53,7 +53,14 @@ Route::prefix('application')->group(function(){
   Route::post('religious', 'ApplicationsController@addReligous')->name('application.religious');
   Route::post('essay', 'ApplicationsController@addEssay')->name('application.essay');
   Route::post('biograph', 'ApplicationsController@addBiograph')->name('application.autobiograph');
+  Route::post('photo', 'ApplicationsController@addPhoto')->name('document.photo');
+  Route::post('diploma', 'ApplicationsController@addDiploma')->name('document.diploma');
+  Route::post('mastereducation', 'ApplicationsController@masterEducation')->name('master.education');
+  Route::post('payment', 'ApplicationsController@addPayment')->name('document.payment');
+  Route::post('nationaId', 'ApplicationsController@addNationalId')->name('document.nationaId');
+  Route::post('recommendation', 'ApplicationsController@addRecommendation')->name('document.recommendationletter');
   Route::post('logout','ApplicationsController@logout')->name('application.logout');
+
 });
 //Admissions officer routes
 Route::prefix('admissions')->group(function()
@@ -62,6 +69,3 @@ Route::prefix('admissions')->group(function()
   Route::get('login','Auth\AdmissionLogin@showLoginForm')->name('admission.login');
   Route::post('login','Auth\AdmissionLogin@login')->name('authentication.check');
 });
-
-
-

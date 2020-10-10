@@ -6,6 +6,7 @@ use App\Applications;
 use Illuminate\Http\Request;
 use App\Candidate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 class ApplicationsController extends Controller
 {
     public function __construct()
@@ -96,6 +97,32 @@ class ApplicationsController extends Controller
       Candidate::findOrFail($userid)->update($data);
       return redirect()->back()->with('alert-success','Data saved');
     }
+    public function masterEducation(Request $request)
+    {
+      //master applicant
+      //education Background
+      $request->validate([
+        'masterschool'=>'bail|required|max:255|string',
+        'schoolmajor'=>'bail|required|max:255|string',
+        'certificate'=>'bail|required|max:255|string',
+        'university'=>'nullable|max:255|string','universitymajor'=>'nullable|max:255|string',
+        'universityqualification'=>'nullable|max:255|string',
+        'college'=>'nullable|max:255|string','collegemajor'=>'nullable|max:255|string',
+        'collegequalification'=>'nullable|max:255|string',
+        'seminary'=>'nullable|max:255|string','seminarymajor'=>'nullable|max:255|string','seminaryqualification'=>'nullable|max:255|string',
+      ],
+      [
+        'masterschool.required'=>'This field is required','schoolmajor.required'=>'This field is required','certificate.required'=>'This field is required',
+      ]);
+      $school=$request->masterschool.'_'.$request->schoolmajor.'_'.$request->certificate;
+      $university=$request->university.'_'.$request->universitymajor.'_'.$request->universityqualification;
+      $college=$request->college.'_'.$request->collegemajor.'_'.$request->collegequalification;
+      $seminary=$request->seminary.'_'.$request->seminarymajor.'_'.$request->seminaryqualification;
+      $data = array('high_school' =>$school,'university1'=>$university,'college1'=>$college,'seminary1'=>$seminary);
+      $userid=$request->user()->id;
+      Candidate::find($userid)->update($data);
+      return redirect()->back()->with('alert-success','Data saved');
+    }
     public function addReligous(Request $request)
     {
       #get data validated
@@ -138,6 +165,132 @@ class ApplicationsController extends Controller
       $data = array('bibliography' =>$request->biograph);
       Candidate::findOrFail($request->user()->id)->update($data);
       return redirect()->back()->with('alert-success','Data saved');
+    }
+    public function addPhoto(Request $request)
+    {
+      //profile picture
+      $request->validate(
+        ['photo'=>'required|mimes:jpg,jpeg,png,gif|max:1048'],
+        ['photo.required'=>'Please upload image file','photo.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('photo')){
+        return back();
+      }
+      $file=$request->file('photo');
+      $extension=$file->extension();
+      $filename='photo'.time().'.'.$extension;
+      $data = array('photo' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->photo;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->photo->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+    public function addDiploma(Request $request)
+    {
+      // upload candidate diploma
+      $request->validate(
+        ['diploma'=>'required|mimes:pdf|max:1048'],
+        ['diploma.required'=>'Please upload pdf file','diploma.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('diploma')){
+        return back();
+      }
+      $file=$request->file('diploma');
+      $extension=$file->extension();
+      $filename='diploma'.time().'.'.$extension;
+      $data = array('advanced_diploma_file' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->advanced_diploma_file;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->diploma->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+
+    public function addPayment(Request $request)
+    {
+      // upload application fees proof of payment
+      $request->validate(
+        ['payment'=>'required|mimes:jpg,jpeg,png,gif,pdf|max:1048'],
+        ['payment.required'=>'Please upload pdf file','payment.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('payment')){
+        return back();
+      }
+      $file=$request->file('payment');
+      $extension=$file->extension();
+      $filename='payment'.time().'.'.$extension;
+      $data = array('bankslip' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->bankslip;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->payment->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+    public function addRecommendation(Request $request)
+    {
+      //upload recommendation letter
+      $request->validate(
+        ['recommendation'=>'required|mimes:pdf|max:1048'],
+        ['recommendation.required'=>'Please upload pdf file','recommendation.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('recommendation')){
+        return back();
+      }
+      $file=$request->file('recommendation');
+      $extension=$file->extension();
+      $filename='recommendation'.time().'.'.$extension;
+      $data = array('recommendation_file' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->recommendation_file;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->recommendation->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+    public function addNationalId(Request $request)
+    {
+      // national or passport identification
+      $request->validate(
+        ['nationalid'=>'required|mimes:pdf|max:1048'],
+        ['nationalid.required'=>'Please upload pdf file','nationalid.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('nationalid')){
+        return back();
+      }
+      $file=$request->file('nationalid');
+      $extension=$file->extension();
+      $filename='nationalid'.time().'.'.$extension;
+      $data = array('nid_passport_file' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->nid_passport_file;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->nationalid->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
     }
     public function logout()
     {

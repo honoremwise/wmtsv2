@@ -28,15 +28,7 @@ class HomeController extends Controller
         $where = array('reference_no' =>$request->user()->application_referrence_no);
         $applications=Applications::where($where)->first();
         if (empty($applications)){
-          #return view('home');
-          //get user program
-          $program=$request->user()->program;
-          if ($program==1) {
-            return view('application.bachelor');
-          }
-          if ($program==2){
-            return view('application.master');
-          }
+          return view('application.application');
         }
         #get application status(approved, rejected or pending)
         $status=$applications->status;
