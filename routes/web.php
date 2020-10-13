@@ -29,7 +29,9 @@ Route::prefix('admin')->group(function(){
     Route::get('/', 'Users\Admin\AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLogin@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLogin@login')->name('admin.login.submit');
+    Route::post('admin.logout', 'Auth\AdminLogin@logout')->name('admin.logout');
     Route::post('/addrole', 'Users\Admin\AdminController@addRole')->name('admin.role');
+    Route::post('/addschedule', 'Users\Admin\AdminController@addSchedule')->name('admin.schedule');
 });
 // Registror routes
 Route::prefix('registror')->group(function(){
@@ -55,10 +57,12 @@ Route::prefix('application')->group(function(){
   Route::post('biograph', 'ApplicationsController@addBiograph')->name('application.autobiograph');
   Route::post('photo', 'ApplicationsController@addPhoto')->name('document.photo');
   Route::post('diploma', 'ApplicationsController@addDiploma')->name('document.diploma');
+  Route::post('degree', 'ApplicationsController@addDegree')->name('document.degree');
   Route::post('mastereducation', 'ApplicationsController@masterEducation')->name('master.education');
   Route::post('payment', 'ApplicationsController@addPayment')->name('document.payment');
   Route::post('nationaId', 'ApplicationsController@addNationalId')->name('document.nationaId');
   Route::post('recommendation', 'ApplicationsController@addRecommendation')->name('document.recommendationletter');
+  Route::post('myapplication','ApplicationsController@submitApplication')->name('application.submit');
   Route::post('logout','ApplicationsController@logout')->name('application.logout');
 
 });

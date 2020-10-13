@@ -1,6 +1,13 @@
 @extends('layouts.account')
 @section('leftmenu')
-  <p></p>
+  <li>
+    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Academics Affaires<span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a href="#" data-toggle="modal" data-target="#myapplication">Application Dates</a>
+        </li>
+    </ul>
+  </li>
 @endsection
 @section('logoutbar')
   <!-- /.dropdown -->
@@ -14,11 +21,11 @@
           <li></li>
           <li class="divider"></li>
           <li>
-            <a href="{{ route('logout') }}"
+            <a href="{{ route('admin.logout') }}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-fw"></i> Logout
             </a>
-            <form id="logout-form" action="{{route('application.logout')}}" method="POST" class="d-none">
+            <form id="logout-form" action="{{route('admin.logout')}}" method="POST" class="d-none">
                 @csrf
             </form>
             <!--
@@ -54,6 +61,7 @@
                     <li class="active"><a href="#users" data-toggle="tab">Manage Users</a>
                     </li>
                     <li><a href="#roles" data-toggle="tab">Users Roles</a> </li>
+                    <li><a href="#academic" data-toggle="tab">Academic Affaires</a> </li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -104,6 +112,67 @@
                       </div>
                     </div>
 
+                    <div class="tab-pane fade" id="academic">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <div class="panel-body">
+                                <?php if (count($apply)>0): ?>
+                                  <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>University Program</th>
+                                        <th>Application started</th>
+                                        <th>Application ended</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php foreach ($apply as $schedule): ?>
+                                        <tr>
+                                          <td><?php echo $schedule->id; ?></td>
+                                          <td>
+                                            <?php echo DB::table('programs')->where('id',$schedule->program_id)->value('program_name');?>
+                                          </td>
+                                          <td><?php echo $schedule->application_start_date; ?></td>
+                                          <td><?php echo $schedule->application_close_date; ?></td>
+                                        </tr>
+                                      <?php endforeach; ?>
+                                    </tbody>
+                                  </table>
+                                <?php endif; ?>
+                                <?php if (!empty($apply)): ?>
+                                  <form action="{{route('admin.schedule')}}" method="post">
+                                    @csrf
+                                    <div class="form-group col-md-12">
+                                      <label>Add New</label>
+                                      <select class="form-control" name="program">
+                                        <option value="">select a program</option>
+                                        <?php foreach ($programs as $pro): ?>
+                                          <option value="<?php echo $pro->id ?>"><?php echo $pro->program_name; ?></option>
+                                        <?php endforeach; ?>
+                                      </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label>Start Date</label>
+                                      <input type="date" name="startdate" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label>End Date</label>
+                                      <input type="date" name="enddate" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                      <button type="submit" name="buttonapplication" class="btn btn-primary btn-block">Save</button>
+                                    </div>
+                                  </form>
+                                <?php endif; ?>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="tab-pane fade in active" id="users">
                       <div class="row">
                         <div class="col-lg-12">
@@ -142,7 +211,24 @@
                     </div>
                 </div>
             </div>
-            <!-- /.panel-body -->
+          <!-- /.panel-body -->
+          <div class="modal fade" id="myapplication" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Current Application dates</h4>
+                      </div>
+                      <div class="modal-body">
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+                  <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+          </div><!--end of modal -->
         </div>
         <!-- /.panel -->
     </div>

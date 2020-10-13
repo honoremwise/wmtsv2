@@ -1,6 +1,8 @@
 @extends('layouts.account')
 @section('leftmenu')
-  <p></p>
+  <li><?php if (!empty(auth()->user()->recommendation_file) && !empty(auth()->user()->bankslip)): ?>
+    <a href="#" data-toggle="modal" data-target="#myapplication">Submit Application</a>
+  <?php endif; ?> </li>
 @endsection
 @section('logoutbar')
   <!-- /.dropdown -->
@@ -21,9 +23,6 @@
             <form id="logout-form" action="{{route('application.logout')}}" method="POST" class="d-none">
                 @csrf
             </form>
-            <!--
-            <a href=""><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-          -->
           </li>
       </ul>
       <!-- /.dropdown-user -->
@@ -31,7 +30,12 @@
   <!-- /.dropdown -->
 @endsection
 @section('pageheading')
- <h1>Study Application|<?php echo DB::table('programs')->where('id',auth()->user()->program)->value('program_name');?></h1><hr>
+ <h1>Study Application|<?php echo DB::table('programs')->where('id',auth()->user()->program)->value('program_name');?></h1>
+ <?php $app=App\Applications::where('reference_no',auth()->user()->application_referrence_no)->first(); ?>
+ <?php if (empty($app)): ?>
+   <span class="invalid-feedback">Application not submitted</span>
+ <?php endif; ?>
+ <hr>
 @endsection
 @section('content')
   <div class="row">
@@ -44,11 +48,13 @@
       <?php endif; ?>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-12 col-md-12">
-      <button type="button" name="button" class="btn btn-success pull-right btn-sm">Submit Application</button>
+  <?php if (!empty(auth()->user()->recommendation_file) && !empty(auth()->user()->bankslip)): ?>
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <button type="button" name="button" class="btn btn-success pull-right btn-sm" data-toggle="modal" data-target="#myapplication">Submit Application</button>
+      </div>
     </div>
-  </div>
+  <?php endif; ?>
   <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -468,13 +474,13 @@
                             <button type="submit" name="button" class="btn btn-primary btn-sm">Upload</button>
                           </div>
                         </form>
-                        <form action="{{route('document.diploma')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('document.degree')}}" method="post" enctype="multipart/form-data">
                           @csrf
                           <div class="form-group col-md-6 col-lg-6">
                             <label>Degree and transcripts </label><span class="invalid-feedback">{{ $errors->first('diploma') }}</span>
                             <input type="file" name="diploma">
-                            <?php if (!empty(auth()->user()->advanced_diploma_file)): ?>
-                              <span><a href="/files/<?php echo auth()->user()->advanced_diploma_file; ?>" target="_blank">Preview</a> </span>
+                            <?php if (!empty(auth()->user()->bacholor_file)): ?>
+                              <span><a href="/files/<?php echo auth()->user()->bacholor_file; ?>" target="_blank">Preview</a> </span>
                             <?php endif; ?>
                             <button type="submit" name="button" class="btn btn-primary btn-sm">Upload</button>
                           </div>
@@ -599,6 +605,30 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="myapplication" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Submit My Application</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="alert alert-danger alert-dismissable">
+                            Please verify that you have given all required data, no more editting once submitted
+                          </div>
+                          <form action="{{route('application.submit')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="reference" value="<?php echo  auth()->user()->application_referrence_no;?>">
+                            <button type="submit" name="button" class="btn btn-success btn-block">submit Application</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div><!--end of modal -->
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->

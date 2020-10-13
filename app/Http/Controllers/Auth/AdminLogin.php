@@ -32,4 +32,10 @@ class AdminLogin extends Controller
       $errors = array('password' =>'Invalid credentials');
       return redirect()->back()->withErrors($errors)->withInput($request->only('email'));
     }
+    public function logout()
+    {
+      Auth::guard('admin')->logout();
+      return redirect()
+        ->route('admin.login');
+    }
 }

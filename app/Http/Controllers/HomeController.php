@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Applications;
+use App\Student;
 class HomeController extends Controller
 {
     /**
@@ -30,8 +31,16 @@ class HomeController extends Controller
         if (empty($applications)){
           return view('application.application');
         }
-        #get application status(approved, rejected or pending)
-        $status=$applications->status;
-        #echo "go student";
+        //check if a candidate is admitted and now a student
+        $std = array('reference_no' =>$request->user()->application_referrence_no);
+        $student=Student::where($std)->first();
+        if (!empty($student)) {
+          return view('student.dashboard');
+        }
+        #get application status(rejected or pending)
+        if ($applications->status=='Pending') {
+          return view('application.status');
+        }
+        return view('application.application');
     }
 }

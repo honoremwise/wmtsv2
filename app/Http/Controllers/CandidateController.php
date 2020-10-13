@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Candidate;
 use App\Program;
-use App\PHPMailer\PHPMailerLib;
+use App\PHPMailer\PHPMailer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class CandidateController extends Controller
@@ -71,16 +71,16 @@ class CandidateController extends Controller
     {
       // send username and password registered on candidates email
       # get PHPMailer instance library
-      $mailer=new PHPMailerLib();
-      $mail=$mailer->load();
-      // SMTP configuration
-      $mail->isSMTP();
-      $mail->Host     = 'mail.supremecluster.com';
-      $mail->SMTPAuth = true;
-      $mail->Username = 'admin@sihs.education';
-      $mail->Password = 'iyaremyef@gmail.com12';
-      $mail->SMTPSecure = 'ssl';
-      $mail->Port     = 465;
+      $mail=new PHPMailer();
+      $mail->IsSMTP(); // enable SMTP
+      $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+      $mail->SMTPAuth = true; // authentication enabled
+      $mail->SMTPSecure = 'tsl'; // secure transfer enabled REQUIRED for Gmail
+      $mail->Host = "smtp.gmail.com";
+      $mail->Port = 587;
+      $mail->IsHTML(true);
+      $mail->Username = "superuser.uwmf@gmail.com";
+      $mail->Password = "0781549903";
       $mail->setFrom('admin@sihs.education', 'Student Application');
       //$mail->addReplyTo('nteclovis2019@gmail.com', 'Faustin');
       // Add a recipient

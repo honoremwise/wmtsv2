@@ -50,7 +50,7 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-comments fa-5x"></i>
+                          <i class="fa fa-tasks fa-5x"></i>
                       </div>
                       <div class="col-xs-9 text-right">
                           <div class="huge">26</div>
@@ -94,10 +94,10 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-shopping-cart fa-5x"></i>
+                          <i class="fa fa-tasks fa-5x"></i>
                       </div>
                       <div class="col-xs-9 text-right">
-                          <div class="huge">124</div>
+                          <div class="huge"><?php echo count($pending); ?></div>
                           <div>Submitted and pending</div>
                       </div>
                   </div>
@@ -117,7 +117,7 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-support fa-5x"></i>
+                          <i class="fa fa-tasks fa-5x"></i>
                       </div>
                       <div class="col-xs-9 text-right">
                           <div class="huge">{{count($candidates)}}</div>
@@ -142,9 +142,13 @@
             <div class="panel-body">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#home" data-toggle="tab">Basic Data</a>
+                    <li class="<?php if (Request::is('admissions')): ?>
+                      <?php echo "activ"; ?>
+                    <?php endif; ?>"><a href="#home" data-toggle="tab">Basic Data</a>
                     </li>
-                    <li><a href="#place" data-toggle="tab">Living place</a> </li>
+                    <li class="<?php if (Request::is('admissions')): ?>
+                      <?php echo "active"; ?>
+                    <?php endif; ?>"><a href="#place" data-toggle="tab">Living place</a> </li>
                 </ul>
 
                 <!-- Tab panes -->

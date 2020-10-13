@@ -217,6 +217,32 @@ class ApplicationsController extends Controller
       return redirect()->back()->with('alert-success','File uploaded successfuly');
     }
 
+    public function addDegree(Request $request)
+    {
+      // upload candidate diploma
+      $request->validate(
+        ['diploma'=>'required|mimes:pdf|max:1048'],
+        ['diploma.required'=>'Please upload pdf file','diploma.max'=>'Upload file less than 1MB']);
+      if (!$request->hasFile('diploma')){
+        return back();
+      }
+      $file=$request->file('diploma');
+      $extension=$file->extension();
+      $filename='diploma'.time().'.'.$extension;
+      $data = array('bacholor_file' => $filename);
+      $userid=$request->user()->id;
+      //upload the file
+      //check and delete existing file
+      $path=public_path('files/');
+      $file=$path.$request->user()->advanced_diploma_file;
+      if (file_exists($file)) {
+        File::delete($file);
+      }
+      Candidate::findOrFail($userid)->update($data);
+      $request->diploma->move(public_path('files/'),$filename);
+      return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+
     public function addPayment(Request $request)
     {
       // upload application fees proof of payment
@@ -291,6 +317,29 @@ class ApplicationsController extends Controller
       Candidate::findOrFail($userid)->update($data);
       $request->nationalid->move(public_path('files/'),$filename);
       return redirect()->back()->with('alert-success','File uploaded successfuly');
+    }
+    public function submitApplication(Request $request)
+    {
+      // submit application
+      $request->validate(['reference'=>'required|string|max:255']);
+      //check for previous application submitted
+      $reference=$request->reference;
+      $application=Applications::where('reference_no',$reference)->first();
+      if (!empty($application['reference_no'])) {
+        // resubmit of application
+        //number_of_application','latest_application_year
+        $number=$application['number_of_application']+1;
+        $year=date('Y-m-d');
+        $update = array('latest_application_year'=>$year,'number_of_application'=>$number,'status'=>'Pending');
+        $id=$application['id'];
+        Applications::findOrFail($id)->update($update);
+        return redirect()->intended(route('home'));
+      }
+      $year=date('Y-m-d');
+      $data = array('reference_no' =>$reference,'latest_application_year'=>$year,'number_of_application'=>'1','status'=>'Pending');
+      //save application
+      $save=Applications::create($data);
+      return redirect()->intended(route('home'));
     }
     public function logout()
     {

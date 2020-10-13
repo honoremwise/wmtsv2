@@ -25,7 +25,7 @@ class AdmissionLogin extends Controller
       ],[
         'password.min'=>'Password is to short',
       ]);
-      $where = array('email' =>$request->email,'password'=>$request->password,'role_id'=>'1');
+      $where = array('email' =>$request->email,'password'=>$request->password,'role_id'=>'3');
       if (Auth::guard('admission')->attempt($where)){
         return redirect()->intended(route('admissionofficer'));
       }

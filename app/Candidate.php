@@ -26,7 +26,7 @@ class Candidate extends Authenticatable
       'application_referrence_no','english_proficiency','native_languages','other_language1','other_language2',
       'high_school','denomination_name','denomination','ordained_status','ordained_church',
       'treatment_status','treatment_description','application_motivation','bibliography',
-      'photo','advanced_diploma_file','recommendation_file','nid_passport_file','bacholor_file','bankslip',
+      'photo','advanced_diploma_file','bacholor_file','recommendation_file','nid_passport_file','bacholor_file','bankslip',
     ];
     protected $hidden = [
     'password',
