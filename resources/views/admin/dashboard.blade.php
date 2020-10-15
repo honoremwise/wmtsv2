@@ -8,6 +8,14 @@
         </li>
     </ul>
   </li>
+  <li>
+    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Users<span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li>
+          <a href="{{route('admin.user')}}">Add new</a>
+        </li>
+    </ul>
+  </li>
 @endsection
 @section('logoutbar')
   <!-- /.dropdown -->

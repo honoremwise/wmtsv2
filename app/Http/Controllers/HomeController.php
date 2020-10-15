@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-use Illuminate\Foundation\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Applications;
 use App\Student;
+use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     /**
@@ -23,12 +23,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        #return view('home');
-        #get the current user status
-        #$appstatus=$this->getStatus($request->user()->id);
+        #get the current user status and application schedule status
+        $now=strtotime("now");
+        $schedule = DB::select("select * from application_schedules where UNIX_TIMESTAMP(application_close_date) >= $now");
         $where = array('reference_no' =>$request->user()->application_referrence_no);
         $applications=Applications::where($where)->first();
-        if (empty($applications)){
+        if (empty($applications) && count($schedule)>0){
           return view('application.application');
         }
         //check if a candidate is admitted and now a student
@@ -37,10 +37,16 @@ class HomeController extends Controller
         if (!empty($student)) {
           return view('student.dashboard');
         }
-        #get application status(rejected or pending)
-        if ($applications->status=='Pending') {
-          return view('application.status');
+        if (!empty($applications) && count($schedule)>0) {
+          #get application status(rejected or pending)
+          if ($applications->status=='pending') {
+            return view('application.status');
+          }
+          if ($applications->status=='rejected' && count($schedule)>0){
+            return view('application.application');
+          }
         }
-        return view('application.application');
+        Auth::guard('student')->logout();
+        return view('application.closed');
     }
 }

@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function(){
     Route::post('admin.logout', 'Auth\AdminLogin@logout')->name('admin.logout');
     Route::post('/addrole', 'Users\Admin\AdminController@addRole')->name('admin.role');
     Route::post('/addschedule', 'Users\Admin\AdminController@addSchedule')->name('admin.schedule');
+    Route::get('/adduser', 'Users\Admin\AdminController@addUser')->name('admin.user');
 });
 // Registror routes
 Route::prefix('registror')->group(function(){

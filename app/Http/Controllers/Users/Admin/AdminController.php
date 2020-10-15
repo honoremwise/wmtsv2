@@ -53,4 +53,8 @@ class AdminController extends Controller
       ApplicationSchedule::create($data);
       return redirect()->back()->with('alert-success','Data saved');
     }
+    public function addUser()
+    {
+      return view('admin.newuser');
+    }
 }

@@ -2,7 +2,8 @@
 @section('leftmenu')
   <li><?php if (!empty(auth()->user()->recommendation_file) && !empty(auth()->user()->bankslip)): ?>
     <a href="#" data-toggle="modal" data-target="#myapplication">Submit Application</a>
-  <?php endif; ?> </li>
+  <?php endif; ?>
+ </li>
 @endsection
 @section('logoutbar')
   <!-- /.dropdown -->
@@ -69,12 +70,8 @@
                       <li><a href="#language" data-toggle="tab">Languages</a>
                     <?php endif; ?>
                     </li>
-                    <?php if (!empty(auth()->user()->native_languages) && auth()->user()->program==1): ?>
+                    <?php if (!empty(auth()->user()->native_languages)): ?>
                       <li><a href="#education" data-toggle="tab">Education</a>
-                      </li>
-                    <?php endif; ?>
-                    <?php if (!empty(auth()->user()->native_languages) && auth()->user()->program==2): ?>
-                      <li><a href="#educationmaster" data-toggle="tab">Education</a>
                       </li>
                     <?php endif; ?>
                     <?php if (!empty(auth()->user()->high_school)||!empty(auth()->user()->university1) ||!empty(auth()->user()->college1)): ?>
@@ -260,7 +257,8 @@
                           </div>
                           <div class="form-group col-md-6 col-lg-6">
                             <label for="">Language1</label>
-                            <input type="text" name="languageone" value="{{auth()->user()->other_language1}}" class="form-control" id="languageone">
+                            <?php $lag1=explode("_",auth()->user()->other_language1) ?>
+                            <input type="text" name="languageone" value="{{$lag1[0]}}" class="form-control" id="languageone">
                           </div>
                           <div class="form-group col-md-3 col-lg-3">
                             <label for="speaking">Speaking</label>
@@ -279,8 +277,9 @@
                             </select>
                           </div>
                           <div class="form-group col-md-6 col-lg-6">
+                            <?php $lag2=explode("_",auth()->user()->other_language2) ?>
                             <label for="">Language2</label>
-                            <input type="text" name="languagetwo" value="{{auth()->user()->other_language2}}" class="form-control" id="languagetwo">
+                            <input type="text" name="languagetwo" value="{{$lag2[0]}}" class="form-control" id="languagetwo">
                           </div>
                           <div class="form-group col-md-3 col-lg-3">
                             <label for="speaking">Speaking</label>
@@ -509,99 +508,104 @@
                         </form>
                       </div>
                     </div>
-
-                    <div class="tab-pane fade" id="educationmaster">
-                      <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                          <p>Education Background</p>
-                        </div>
-                        <form action="{{route('master.education')}}" method="post">
-                          @csrf
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>High School</label><span class="invalid-feedback">{{ $errors->first('masterschool') }}</span>
-                            <input type="text" name="masterschool" value="<?php echo auth()->user()->high_school; ?>" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Major</label><span class="invalid-feedback">{{$errors->first('schoolmajor')}}</span>
-                            <input type="text" name="schoolmajor" value="{{auth()->user()->high_school}}" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Qualification</label><span class="invalid-feedback">{{$errors->first('certificate')}}</span>
-                            <input type="text" name="certificate" value="" class="form-control">
-                          </div>
-
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>University Attended</label><span class="invalid-feedback">{{$errors->first('university')}}</span>
-                            <input type="text" name="university" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Major</label><span class="invalid-feedback">{{$errors->first('universitymajor')}}</span>
-                            <input type="text" name="universitymajor" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Qualification</label><span class="invalid-feedback">{{$errors->first('universityqualification')}}</span>
-                            <input type="text" name="universityqualification" value="" class="form-control">
-                          </div>
-
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>College Attended</label><span class="invalid-feedback">{{$errors->first('college')}}</span>
-                            <input type="text" name="college" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Major</label><span class="invalid-feedback">{{$errors->first('collegemajor')}}</span>
-                            <input type="text" name="collegemajor" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Qualification</label><span class="invalid-feedback">{{$errors->first('collegequalification')}}</span>
-                            <input type="text" name="collegequalification" value="" class="form-control">
-                          </div>
-
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Seminary Attended</label><span class="invalid-feedback">{{$errors->first('seminary')}}</span>
-                            <input type="text" name="seminary" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Major</label><span class="invalid-feedback">{{$errors->first('seminarymajor')}}</span>
-                            <input type="text" name="seminarymajor" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-md-4 col-lg-4">
-                            <label>Qualification</label><span class="invalid-feedback">{{$errors->first('seminaryqualification')}}</span>
-                            <input type="text" name="seminaryqualification" value="" class="form-control">
-                          </div>
-                          <div class="form-group col-lg-12 col-md-12">
-                            <button type="submit" name="buttoneducation" class="btn btn-primary btn-block">Save</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-
+                    <?php $high=explode("_",auth()->user()->high_school); ?>
+                    <?php $university=explode("_",auth()->user()->university1); ?>
+                    <?php $college=explode("_",auth()->user()->college1); ?>
+                    <?php $seminary=explode("_",auth()->user()->seminary1); ?>
                     <div class="tab-pane fade" id="education">
-                      <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                          <p>Education Background</p>
+                      <?php if (auth()->user()->program==2): ?>
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12">
+                            <p>Education Background</p>
+                          </div>
+                          <form action="{{route('master.education')}}" method="post">
+                            @csrf
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>High School</label><span class="invalid-feedback">{{ $errors->first('masterschool') }}</span>
+                              <input type="text" name="masterschool" value="<?php echo $high[0]; ?>" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Major</label><span class="invalid-feedback">{{$errors->first('schoolmajor')}}</span>
+                              <input type="text" name="schoolmajor" value="<?php echo $high[1] ?>" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Qualification</label><span class="invalid-feedback">{{$errors->first('certificate')}}</span>
+                              <input type="text" name="certificate" value="<?php echo $high[2] ?>" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>University Attended</label><span class="invalid-feedback">{{$errors->first('university')}}</span>
+                              <input type="text" name="university" value="<?php echo $university[0]; ?>" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Major</label><span class="invalid-feedback">{{$errors->first('universitymajor')}}</span>
+                              <input type="text" name="universitymajor" value="<?php echo $university[1] ?>" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Qualification</label><span class="invalid-feedback">{{$errors->first('universityqualification')}}</span>
+                              <input type="text" name="universityqualification" value="{{$university[2]}}" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>College Attended</label><span class="invalid-feedback">{{$errors->first('college')}}</span>
+                              <input type="text" name="college" value="{{$college[0]}}" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Major</label><span class="invalid-feedback">{{$errors->first('collegemajor')}}</span>
+                              <input type="text" name="collegemajor" value="<?php echo $college[1]; ?>" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Qualification</label><span class="invalid-feedback">{{$errors->first('collegequalification')}}</span>
+                              <input type="text" name="collegequalification" value="{{$college[2]}}" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Seminary Attended</label><span class="invalid-feedback">{{$errors->first('seminary')}}</span>
+                              <input type="text" name="seminary" value="{{$seminary[0]}}" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Major</label><span class="invalid-feedback">{{$errors->first('seminarymajor')}}</span>
+                              <input type="text" name="seminarymajor" value="{{$seminary[1]}}" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                              <label>Qualification</label><span class="invalid-feedback">{{$errors->first('seminaryqualification')}}</span>
+                              <input type="text" name="seminaryqualification" value="{{$seminary[2]}}" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-12 col-md-12">
+                              <button type="submit" name="buttoneducation" class="btn btn-primary btn-block">Save</button>
+                            </div>
+                          </form>
+                        </div><!-- end of row -->
+                        <!-- education bachelor application -->
+                      <?php endif; ?>
+                      <?php if (auth()->user()->program==1): ?>
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12">
+                            <p>Education Background</p>
+                          </div>
+                          <form action="{{route('application.addeducation')}}" method="post">
+                            @csrf
+                            <div class="form-group col-md-12 col-lg-12">
+                              <label>High School Attended</label>
+                              <span class="invalid-feedback">{{ $errors->first('school') }}</span>
+                              <input type="text" name="school" value="<?php echo $high[0] ?>" class="form-control" id="school">
+                            </div>
+                            <div class="form-group col-md-12 col-lg-12">
+                              <label>Major Field</label>
+                              <span class="invalid-feedback">{{ $errors->first('major') }}</span>
+                              <input type="text" name="major" value="<?php echo $high[1] ?>" class="form-control" id="major">
+                            </div>
+                            <div class="form-group col-md-12 col-lg-12">
+                              <label>Qualification</label>
+                              <span class="invalid-feedback">{{ $errors->first('qualification') }}</span>
+                              <input type="text" name="qualification" value="<?php echo $high[2] ?>" class="form-control" id="qualification">
+                            </div>
+                            <div class="form-group col-md-12 col-lg-12">
+                              <button type="submit" name="buttoneducation" class="btn btn-primary btn-block">Save</button>
+                            </div>
+                          </form>
                         </div>
-                        <form action="{{route('application.addeducation')}}" method="post">
-                          @csrf
-                          <div class="form-group col-md-12 col-lg-12">
-                            <label>High School Attended</label>
-                            <span class="invalid-feedback">{{ $errors->first('school') }}</span>
-                            <input type="text" name="school" value="{{auth()->user()->high_school}}" class="form-control" id="school">
-                          </div>
-                          <div class="form-group col-md-12 col-lg-12">
-                            <label>Major Field</label>
-                            <span class="invalid-feedback">{{ $errors->first('major') }}</span>
-                            <input type="text" name="major" value="{{auth()->user()->high_school}}" class="form-control" id="major">
-                          </div>
-                          <div class="form-group col-md-12 col-lg-12">
-                            <label>Qualification</label>
-                            <span class="invalid-feedback">{{ $errors->first('qualification') }}</span>
-                            <input type="text" name="qualification" value="{{auth()->user()->high_school}}" class="form-control" id="qualification">
-                          </div>
-                          <div class="form-group col-md-12 col-lg-12">
-                            <button type="submit" name="buttoneducation" class="btn btn-primary btn-block">Save</button>
-                          </div>
-                        </form>
-                      </div>
+                      <?php endif; ?>
                     </div>
                 </div>
             </div>

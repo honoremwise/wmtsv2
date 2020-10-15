@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Candidate;
 use App\Program;
+use App\ApplicationSchedule;
+use Illuminate\Foundation\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\PHPMailer\PHPMailer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +17,15 @@ class CandidateController extends Controller
     }
     public function index()
     {
-      $pro = array('programs' => Program::all());
-      return view('application/account',$pro);
+      //check if application is open
+      $now=strtotime("now");
+      $schedule = DB::select("select * from application_schedules where UNIX_TIMESTAMP(application_close_date) >= $now");
+      if (count($schedule)>0) {
+        $pro=DB::select("select * from programs where id in(select id from application_schedules where UNIX_TIMESTAMP(application_close_date) >= '$now')");
+        $data = array('programs' =>$pro);
+        return view('application/account',$data);
+      }
+      return view('application/closed');
     }
     public function signin()
     {

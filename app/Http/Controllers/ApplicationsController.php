@@ -336,7 +336,7 @@ class ApplicationsController extends Controller
         return redirect()->intended(route('home'));
       }
       $year=date('Y-m-d');
-      $data = array('reference_no' =>$reference,'latest_application_year'=>$year,'number_of_application'=>'1','status'=>'Pending');
+      $data = array('reference_no' =>$reference,'latest_application_year'=>$year,'number_of_application'=>'1','status'=>'pending');
       //save application
       $save=Applications::create($data);
       return redirect()->intended(route('home'));
@@ -344,7 +344,6 @@ class ApplicationsController extends Controller
     public function logout()
     {
       Auth::guard('student')->logout();
-      return redirect()
-        ->route('signin');
+      return redirect()->route('signin');
     }
 }
