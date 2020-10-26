@@ -21,7 +21,7 @@ class RegistrorController extends Controller
     public function index()
     {
       return view('registror.dashboard');
-    } 
+    }
     //getting all records from registror core tables
     public function applicants(){
      $data=array('applications' => DB::table('applications')

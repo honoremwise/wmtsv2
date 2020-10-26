@@ -56,7 +56,7 @@
                             </div>
                         </div>
                       </div>
-                      
+
                 </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="panel panel-primary">
@@ -81,7 +81,6 @@
                         </div>
                       </div>
                       </div>
-                     
                       <!-- Applicants -->
             <?php if(Request::is('registror/applicants')): ?>
            <div class=row>
@@ -123,12 +122,12 @@
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-check" style="font-size:18px;color:lightgreen" title="Admit"></k></a>||
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-eye" style="font-size:18px;color:blue" title="Profile"></k></a>
                                   </td>
-                                  
-                                  </tr>  
+
+                                  </tr>
                                   <?php endforeach?>
-                                  
+
                               </tbody>
-                               </table>         
+                               </table>
                                     </p>
                               </div>
                               </div>
@@ -137,8 +136,8 @@
                     </div>
                     <!-- /.panel -->
                   </div>
-                  
-                  <?php endif ?> 
+
+                  <?php endif ?>
               <!-- Students -->
               <?php if(Request::is('registror/students')): ?>
            <div class=row>
@@ -180,12 +179,12 @@
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-check" style="font-size:18px;color:lightgreen" title="Admit"></k></a>||
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-eye" style="font-size:18px;color:blue" title="Profile"></k></a>
                                   </td>
-                                  
-                                  </tr>  
+
+                                  </tr>
                                   <?php endforeach?>
-                                  
+
                               </tbody>
-                               </table>         
+                               </table>
                                     </p>
                               </div>
                               </div>
@@ -194,8 +193,8 @@
                     </div>
                     <!-- /.panel -->
                   </div>
-                  
-                  <?php endif ?> 
+
+                  <?php endif ?>
 
                   <!-- marks page -->
                   <?php if(Request::is('registror/marks')): ?>
@@ -238,12 +237,12 @@
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-check" style="font-size:18px;color:lightgreen" title="Admit"></k></a>||
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-eye" style="font-size:18px;color:blue" title="Profile"></k></a>
                                   </td>
-                                  
-                                  </tr>  
+
+                                  </tr>
                                   <?php endforeach?>
-                                  
+
                               </tbody>
-                               </table>         
+                               </table>
                                     </p>
                               </div>
                               </div>
@@ -252,8 +251,8 @@
                     </div>
                     <!-- /.panel -->
                   </div>
-                  
-                  <?php endif ?> 
+
+                  <?php endif ?>
                   <!-- students learning status -->
                    <!-- marks page -->
                    <?php if(Request::is('registror/status')): ?>
@@ -296,12 +295,12 @@
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-check" style="font-size:18px;color:lightgreen" title="Admit"></k></a>||
                                   <a href="/registror/applicants?Applicant={{ $applicants->id}}"><k class="fa fa-eye" style="font-size:18px;color:blue" title="Profile"></k></a>
                                   </td>
-                                  
-                                  </tr>  
+
+                                  </tr>
                                   <?php endforeach?>
-                                  
+
                               </tbody>
-                               </table>         
+                               </table>
                                     </p>
                               </div>
                               </div>
@@ -310,10 +309,10 @@
                     </div>
                     <!-- /.panel -->
                   </div>
-                  
-                  <?php endif ?> 
-              
-   
+
+                  <?php endif ?>
+
+
 
 
  </div>

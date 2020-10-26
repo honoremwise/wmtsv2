@@ -32,4 +32,10 @@ class AdmissionLogin extends Controller
       $errors = array('password' =>'Invalid credentials');
       return redirect()->back()->withErrors($errors)->withInput($request->only('email'));
     }
+    public function logout()
+    {
+      Auth::guard('admission')->logout();
+      return redirect()
+        ->route('admission.login');
+    }
 }

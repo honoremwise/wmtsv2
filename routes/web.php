@@ -73,4 +73,10 @@ Route::prefix('admissions')->group(function()
   Route::get('/','Users\Admissions\AdmissionController@index')->name('admissionofficer');
   Route::get('login','Auth\AdmissionLogin@showLoginForm')->name('admission.login');
   Route::post('login','Auth\AdmissionLogin@login')->name('authentication.check');
+  Route::post('logout','Auth\AdmissionLogin@logout')->name('admission.logout');
+  Route::post('applicantsview','Users\Admissions\AdmissionController@applicantsView')->name('viewapplications');
+  Route::get('applicantsrejected','Users\Admissions\AdmissionController@applicantsRejected')->name('viewrejected');
+  Route::get('applicantsadmitted','Users\Admissions\AdmissionController@applicantsAdmitted')->name('viewadmitted');
+  Route::get('inprogress','Users\Admissions\AdmissionController@applicantsInProgress')->name('inapplication');
+  Route::post('details','Users\Admissions\AdmissionController@appDetails')->name('admission.details');
 });

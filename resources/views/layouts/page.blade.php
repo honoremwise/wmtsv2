@@ -52,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">World Mission Teological Seminar</a>
+                <a class="navbar-brand" href="#">World Mission Theological Seminar</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -114,7 +114,7 @@
     <script src="{{asset('template/dist/js/sb-admin-2.js')}}"></script>
     <script>
     $(document).ready(function() {
-        $('#dataTables-example').DataTable({
+        $('#application').DataTable({
             responsive: true
         });
     });
